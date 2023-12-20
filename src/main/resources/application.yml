@@ -14,3 +14,7 @@ spring:
     hibernate:
       format_sql: true
       ddl-auto: none
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

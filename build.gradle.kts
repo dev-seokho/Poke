@@ -34,6 +34,9 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j")
+
+	// swagger
+	implementation("io.springfox:springfox-boot-starter:3.0.0")
 }
 
 dependencyManagement {
