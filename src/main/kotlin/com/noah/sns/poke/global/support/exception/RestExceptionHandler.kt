@@ -22,7 +22,6 @@ class RestExceptionHandler(
 
     @ExceptionHandler(EntityNotFoundException::class)
     fun handle(e: EntityNotFoundException, request: HttpServletRequest): ResponseEntity<Any>? {
-
         return handleExceptionInternal(
             e,
             RestExceptionResponse.of(
@@ -71,6 +70,23 @@ class RestExceptionHandler(
             HttpStatus.BAD_REQUEST,
             ServletWebRequest(request)
         )!!
+    }
+
+    @ExceptionHandler(AlreadyExistEmailException::class)
+    fun handle(e: AlreadyExistEmailException, request: HttpServletRequest): ResponseEntity<Any>? {
+        return handleExceptionInternal(
+            e,
+            RestExceptionResponse.of(
+                status = HttpStatus.BAD_REQUEST.value(),
+                code = e.messageKey.name,
+                message = messageSourceService.getMessage(e.messageKey, e.messageArguments),
+                title = messageSourceService.getTitle(e.messageKey),
+                messageArguments = e.messageArguments,
+            ),
+            HttpHeaders.EMPTY,
+            HttpStatus.NOT_FOUND,
+            ServletWebRequest(request)
+        )
     }
 
     fun <T : Throwable> T.log(): T {
