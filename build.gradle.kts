@@ -36,7 +36,8 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j")
 
 	// swagger
-	implementation("io.springfox:springfox-boot-starter:3.0.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4")
+
 }
 
 dependencyManagement {
