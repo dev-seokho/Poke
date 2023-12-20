@@ -27,9 +27,7 @@ class RestExceptionHandler(
             RestExceptionResponse.of(
                 status = HttpStatus.NOT_FOUND.value(),
                 code = e.messageKey.name,
-                message = messageSourceService.getMessage(e.messageKey, e.messageArguments),
-                title = messageSourceService.getTitle(e.messageKey),
-                messageArguments = e.messageArguments,
+                message = messageSourceService.getMessage(e.messageKey, e.messageArguments)
             ),
             HttpHeaders.EMPTY,
             HttpStatus.NOT_FOUND,
@@ -44,9 +42,7 @@ class RestExceptionHandler(
             RestExceptionResponse.of(
                 status = HttpStatus.BAD_REQUEST.value(),
                 code = e.messageKey.name,
-                message = messageSourceService.getMessage(e.messageKey, e.messageArguments),
-                title = messageSourceService.getTitle(e.messageKey),
-                messageArguments = e.messageArguments,
+                message = messageSourceService.getMessage(e.messageKey, e.messageArguments)
             ),
             HttpHeaders.EMPTY,
             HttpStatus.BAD_REQUEST,
@@ -79,12 +75,10 @@ class RestExceptionHandler(
             RestExceptionResponse.of(
                 status = HttpStatus.BAD_REQUEST.value(),
                 code = e.messageKey.name,
-                message = messageSourceService.getMessage(e.messageKey, e.messageArguments),
-                title = messageSourceService.getTitle(e.messageKey),
-                messageArguments = e.messageArguments,
+                message = messageSourceService.getMessage(e.messageKey, e.messageArguments)
             ),
             HttpHeaders.EMPTY,
-            HttpStatus.NOT_FOUND,
+            HttpStatus.BAD_REQUEST,
             ServletWebRequest(request)
         )
     }

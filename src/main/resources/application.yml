@@ -2,6 +2,9 @@ server:
   port: 8080
 
 spring:
+  messages:
+    basename: messages/messages
+
   datasource:
     url: jdbc:mysql://${MYSQL_URL}:${MYSQL_PORT}/${MYSQL_DBNAME}?serverTimezone=UTC&characterEncoding=UTF-8
     username: ${MYSQL_USERNAME}
