@@ -16,8 +16,9 @@ class UserController(
 ) {
     @PostMapping
     fun singUp(
-        @RequestBody signUpRequest:SignUpRequest
+        @RequestBody request: SignUpRequest
     ): ResponseEntity<SignUpResponse> {
-        return ResponseEntity.ok(userService.signUp(signUpRequest))
+        request.validate()
+        return ResponseEntity.ok(userService.signUp(request))
     }
 }
