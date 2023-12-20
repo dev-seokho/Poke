@@ -47,12 +47,3 @@ class EntityNotFoundException : ApiException {
         *objs
     )
 }
-
-class AlreadyExistEmailException : ApiException {
-    constructor(messageKey: MessageKey, vararg objs: Any) : super(messageKey, *objs)
-    constructor(messageKey: MessageKey, cause: Throwable, vararg objs: Any) : super(
-        messageKey,
-        cause,
-        *objs
-    )
-}

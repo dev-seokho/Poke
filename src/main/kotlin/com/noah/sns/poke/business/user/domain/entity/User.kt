@@ -26,6 +26,7 @@ class User(
     val birthDate: LocalDate,
 
     @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
     val gender: Gender,
 
     @Column(name = "created_at")

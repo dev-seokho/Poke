@@ -68,21 +68,6 @@ class RestExceptionHandler(
         )!!
     }
 
-    @ExceptionHandler(AlreadyExistEmailException::class)
-    fun handle(e: AlreadyExistEmailException, request: HttpServletRequest): ResponseEntity<Any>? {
-        return handleExceptionInternal(
-            e,
-            RestExceptionResponse.of(
-                status = HttpStatus.BAD_REQUEST.value(),
-                code = e.messageKey.name,
-                message = messageSourceService.getMessage(e.messageKey, e.messageArguments)
-            ),
-            HttpHeaders.EMPTY,
-            HttpStatus.BAD_REQUEST,
-            ServletWebRequest(request)
-        )
-    }
-
     fun <T : Throwable> T.log(): T {
         log.error(this.message, this)
         return this
