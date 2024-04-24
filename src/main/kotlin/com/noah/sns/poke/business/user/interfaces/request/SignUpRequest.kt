@@ -2,7 +2,7 @@ package com.noah.sns.poke.business.user.interfaces.request
 
 import com.noah.sns.poke.business.user.domain.entity.User
 import com.noah.sns.poke.global.support.MessageKey
-import com.noah.sns.poke.global.support.enums.Gender
+import com.noah.sns.poke.global.support.enum.Gender
 import com.noah.sns.poke.global.support.exception.MethodArgumentInvalidException
 import com.noah.sns.poke.global.support.util.isValidEmail
 import com.noah.sns.poke.global.support.util.isValidPassword

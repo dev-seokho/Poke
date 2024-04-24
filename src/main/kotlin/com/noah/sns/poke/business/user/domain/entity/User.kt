@@ -1,6 +1,6 @@
 package com.noah.sns.poke.business.user.domain.entity
 
-import com.noah.sns.poke.global.support.enums.Gender
+import com.noah.sns.poke.global.support.enum.Gender
 import jakarta.persistence.*
 import java.time.LocalDate
 import java.time.LocalDateTime
