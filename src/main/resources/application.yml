@@ -31,3 +31,6 @@ springdoc:
     disable-swagger-default-url: true
     display-request-duration: true
     operations-sorter: alpha
+
+jwt:
+  secret: 4939445d52275a489b61c47726dd63e7cdf80a876927e9ddc1cd682edccbe686de9a2aab15ad84dd06e6727612ee684140ce9cf29960875212480d171d270858
