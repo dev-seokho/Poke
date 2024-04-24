@@ -1,13 +1,12 @@
-package com.noah.poke
+package com.noah.sns.poke.other
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class PokeApplicationTests {
+class KotlinTest {
 
-	@Test
-	fun contextLoads() {
-	}
-
+    @Test
+    fun test() {
+    }
 }

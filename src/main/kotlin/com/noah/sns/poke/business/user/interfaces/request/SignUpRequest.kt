@@ -13,7 +13,7 @@ data class SignUpRequest(
     val email: String,
     val password: String,
     val birthDate: LocalDate,
-    val gender: Gender
+    val gender: Gender,
 ) {
     fun validate() {
         if (!this.email.isValidEmail()) {

@@ -1,6 +1,5 @@
 package com.noah.sns.poke.business.user.application.business
 
-import com.noah.sns.poke.business.user.domain.entity.User
 import com.noah.sns.poke.business.user.domain.repository.UserRepository
 import com.noah.sns.poke.business.user.interfaces.request.SignUpRequest
 import com.noah.sns.poke.business.user.interfaces.response.SignUpResponse
@@ -13,14 +12,13 @@ import org.springframework.transaction.annotation.Transactional
 class UserService(
     private val userRepository: UserRepository
 ) {
-
     @Transactional
     fun signUp(signUpRequest: SignUpRequest): SignUpResponse {
         userRepository.findByEmail(signUpRequest.email)?.let {
             throw MethodArgumentInvalidException(MessageKey.ALREADY_EXIST_EMAIL)
         }
 
-        val user: User = SignUpRequest.toEntity(signUpRequest)
+        val user = SignUpRequest.toEntity(signUpRequest)
         return SignUpResponse.of(userRepository.save(user))
     }
 }
