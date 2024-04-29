@@ -1,7 +1,7 @@
 package com.noah.sns.poke.business.user.interfaces.request
 
 import com.noah.sns.poke.business.user.domain.entity.User
-import com.noah.sns.poke.global.support.MessageKey
+import com.noah.sns.poke.global.support.exception.MessageKey
 import com.noah.sns.poke.global.support.enum.Gender
 import com.noah.sns.poke.global.support.exception.MethodArgumentInvalidException
 import com.noah.sns.poke.global.support.util.isValidEmail
@@ -38,6 +38,17 @@ data class SignUpRequest(
                 birthDate = signUpRequest.birthDate,
                 gender = signUpRequest.gender
             )
+        }
+    }
+}
+
+data class SignInRequest(
+    val email: String,
+    val password: String
+) {
+    fun validate() {
+        if (this.email.isBlank() || this.password.isBlank()) {
+            throw MethodArgumentInvalidException(MessageKey.BLANK_EMAIL_OR_PASSWORD)
         }
     }
 }

@@ -1,7 +1,5 @@
 package com.noah.sns.poke.global.support.exception
 
-import com.noah.sns.poke.global.support.MessageKey
-
 abstract class ApiException : RuntimeException {
     val messageKey: MessageKey
     val objs: Array<*>

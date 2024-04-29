@@ -37,4 +37,7 @@ class User(
 
     @Column(name = "deleted_at")
     val deletedAt: LocalDateTime? = null
-)
+) {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    val userRole: List<UserRole>? = null
+}

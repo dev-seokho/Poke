@@ -1,6 +1,5 @@
 package com.noah.sns.poke.global.support.exception
 
-import com.noah.sns.poke.global.support.MessageKey
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolationException
 import org.slf4j.Logger
@@ -8,6 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.ServletWebRequest
@@ -43,6 +43,21 @@ class RestExceptionHandler(
                 status = HttpStatus.BAD_REQUEST.value(),
                 code = e.messageKey.name,
                 message = messageSourceService.getMessage(e.messageKey, e.messageArguments)
+            ),
+            HttpHeaders.EMPTY,
+            HttpStatus.BAD_REQUEST,
+            ServletWebRequest(request)
+        )
+    }
+
+    @ExceptionHandler(BadCredentialsException::class)
+    fun handle(e: BadCredentialsException, request: HttpServletRequest): ResponseEntity<Any>? {
+        return handleExceptionInternal(
+            e,
+            RestExceptionResponse.of(
+                status = HttpStatus.BAD_REQUEST.value(),
+                code = MessageKey.INVALID_USER_INFO.name,
+                message = messageSourceService.getMessage(MessageKey.INVALID_USER_INFO)
             ),
             HttpHeaders.EMPTY,
             HttpStatus.BAD_REQUEST,
