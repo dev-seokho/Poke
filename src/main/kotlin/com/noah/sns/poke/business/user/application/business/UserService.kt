@@ -7,10 +7,13 @@ import com.noah.sns.poke.business.user.interfaces.request.SignInRequest
 import com.noah.sns.poke.business.user.interfaces.request.SignUpRequest
 import com.noah.sns.poke.business.user.interfaces.response.SignInResponse
 import com.noah.sns.poke.business.user.interfaces.response.SignUpResponse
+import com.noah.sns.poke.business.user.interfaces.response.UserInfoResponse
 import com.noah.sns.poke.global.auth.JwtTokenProvider
 import com.noah.sns.poke.global.support.exception.MessageKey
 import com.noah.sns.poke.global.support.enum.ROLE
+import com.noah.sns.poke.global.support.exception.EntityNotFoundException
 import com.noah.sns.poke.global.support.exception.MethodArgumentInvalidException
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.stereotype.Service
@@ -45,5 +48,11 @@ class UserService(
         val tokenInfo = jwtTokenProvider.createToken(authentication)
 
         return SignInResponse.of(tokenInfo)
+    }
+
+    @Transactional(readOnly = true)
+    fun searchMyInfo(id: Long): UserInfoResponse {
+        val user = userRepository.findByIdOrNull(id) ?: throw EntityNotFoundException(MessageKey.USER_NOT_FOUND)
+        return UserInfoResponse.of(user)
     }
 }

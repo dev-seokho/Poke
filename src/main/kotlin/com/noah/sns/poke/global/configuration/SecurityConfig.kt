@@ -19,14 +19,15 @@ class SecurityConfig(
 ) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        val publicUrls = listOf("/users/signup")
+        val publicUrls = listOf("/users/signup", "/users/signin")
+        val privateUrls = listOf("/users/**")
 
         return http.httpBasic { it.disable() }
             .csrf { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests {
-                it.requestMatchers(*publicUrls.toTypedArray())
-                    .anonymous()
+                it.requestMatchers(*publicUrls.toTypedArray()).anonymous()
+                    .requestMatchers(*privateUrls.toTypedArray()).hasRole("MEMBER")
                     .anyRequest()
                     .permitAll()
             }.addFilterBefore(
@@ -36,6 +37,6 @@ class SecurityConfig(
     }
 
     @Bean
-    fun passwordEncoder() : PasswordEncoder =
+    fun passwordEncoder(): PasswordEncoder =
         PasswordEncoderFactories.createDelegatingPasswordEncoder()
 }
