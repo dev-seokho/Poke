@@ -5,9 +5,11 @@ import com.noah.sns.poke.business.user.domain.repository.UserRepository
 import com.noah.sns.poke.business.user.domain.repository.UserRoleRepository
 import com.noah.sns.poke.business.user.interfaces.request.SignInRequest
 import com.noah.sns.poke.business.user.interfaces.request.SignUpRequest
+import com.noah.sns.poke.business.user.interfaces.request.UpdateUserRequest
 import com.noah.sns.poke.business.user.interfaces.response.SignInResponse
 import com.noah.sns.poke.business.user.interfaces.response.SignUpResponse
-import com.noah.sns.poke.business.user.interfaces.response.UserInfoResponse
+import com.noah.sns.poke.business.user.interfaces.response.SearchMyInfoResponse
+import com.noah.sns.poke.business.user.interfaces.response.UpdateUserResponse
 import com.noah.sns.poke.global.auth.JwtTokenProvider
 import com.noah.sns.poke.global.support.exception.MessageKey
 import com.noah.sns.poke.global.support.enum.ROLE
@@ -29,7 +31,9 @@ class UserService(
     private val passwordEncoder: PasswordEncoder
 ) {
     @Transactional
-    fun signUp(signUpRequest: SignUpRequest): SignUpResponse {
+    fun signUp(
+        signUpRequest: SignUpRequest
+    ): SignUpResponse {
         userRepository.findByEmail(signUpRequest.email)?.let {
             throw MethodArgumentInvalidException(MessageKey.ALREADY_EXIST_EMAIL)
         }
@@ -44,7 +48,9 @@ class UserService(
     }
 
     @Transactional
-    fun signIn(signInRequest: SignInRequest): SignInResponse {
+    fun signIn(
+        signInRequest: SignInRequest
+    ): SignInResponse {
         val user = userRepository.findByEmail(signInRequest.email)
             ?: throw EntityNotFoundException(MessageKey.USER_NOT_FOUND)
 
@@ -60,8 +66,22 @@ class UserService(
     }
 
     @Transactional(readOnly = true)
-    fun searchMyInfo(id: Long): UserInfoResponse {
-        val user = userRepository.findByIdOrNull(id) ?: throw EntityNotFoundException(MessageKey.USER_NOT_FOUND)
-        return UserInfoResponse.of(user)
+    fun searchMyInfo(
+        userId: Long
+    ): SearchMyInfoResponse {
+        val user = userRepository.findByIdOrNull(userId) ?: throw EntityNotFoundException(MessageKey.USER_NOT_FOUND)
+        return SearchMyInfoResponse.of(user)
+    }
+
+    @Transactional
+    fun updateUser(
+        updateUserRequest: UpdateUserRequest, userId: Long
+    ): UpdateUserResponse {
+        val user = userRepository.findByIdOrNull(userId) ?: throw EntityNotFoundException(MessageKey.USER_NOT_FOUND)
+
+        updateUserRequest.name?.let { user.name = it }
+        updateUserRequest.password?.let { user.password = passwordEncoder.encode(it) }
+
+        return UpdateUserResponse.of(user)
     }
 }

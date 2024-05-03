@@ -4,11 +4,14 @@ import com.noah.sns.poke.business.user.application.business.CustomUserDetailsSer
 import com.noah.sns.poke.business.user.application.business.UserService
 import com.noah.sns.poke.business.user.interfaces.request.SignInRequest
 import com.noah.sns.poke.business.user.interfaces.request.SignUpRequest
+import com.noah.sns.poke.business.user.interfaces.request.UpdateUserRequest
 import com.noah.sns.poke.business.user.interfaces.response.SignInResponse
 import com.noah.sns.poke.business.user.interfaces.response.SignUpResponse
-import com.noah.sns.poke.business.user.interfaces.response.UserInfoResponse
+import com.noah.sns.poke.business.user.interfaces.response.SearchMyInfoResponse
+import com.noah.sns.poke.business.user.interfaces.response.UpdateUserResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -37,8 +40,17 @@ class UserController(
     }
 
     @GetMapping("/me")
-    fun searchMyInfo(): ResponseEntity<UserInfoResponse> {
+    fun searchMyInfo(): ResponseEntity<SearchMyInfoResponse> {
         val userId = customUserDetailsService.getUserId()
         return ResponseEntity.ok(userService.searchMyInfo(userId))
+    }
+
+    @PatchMapping
+    fun updateUser(
+        @RequestBody request: UpdateUserRequest
+    ): ResponseEntity<UpdateUserResponse> {
+        request.validate()
+        val userId = customUserDetailsService.getUserId()
+        return ResponseEntity.ok(userService.updateUser(request, userId))
     }
 }

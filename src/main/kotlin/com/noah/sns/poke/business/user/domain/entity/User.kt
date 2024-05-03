@@ -14,13 +14,13 @@ class User(
     val id: Long? = null,
 
     @Column(name = "name")
-    val name: String,
+    var name: String,
 
     @Column(name = "email", unique = true, updatable = false)
     val email: String,
 
     @Column(name = "password")
-    val password: String,
+    var password: String,
 
     @Column(name = "birth_date")
     val birthDate: LocalDate,

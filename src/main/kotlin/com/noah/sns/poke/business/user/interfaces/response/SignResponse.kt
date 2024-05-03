@@ -4,12 +4,12 @@ import com.noah.sns.poke.business.user.domain.entity.User
 import com.noah.sns.poke.global.auth.TokenInfo
 
 data class SignUpResponse(
-    val id: Long
+    val userId: Long
 ) {
     companion object {
         fun of(user: User) : SignUpResponse {
             return SignUpResponse(
-                id = user.id!!
+                userId = user.id!!
             )
         }
     }

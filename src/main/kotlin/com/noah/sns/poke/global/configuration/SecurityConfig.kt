@@ -18,7 +18,9 @@ class SecurityConfig(
     private val jwtTokenProvider: JwtTokenProvider
 ) {
     @Bean
-    fun filterChain(http: HttpSecurity): SecurityFilterChain {
+    fun filterChain(
+        http: HttpSecurity
+    ): SecurityFilterChain {
         val publicUrls = listOf("/users/signup", "/users/signin")
         val privateUrls = listOf("/users/**")
 

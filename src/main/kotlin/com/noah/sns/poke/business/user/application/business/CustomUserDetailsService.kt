@@ -19,13 +19,17 @@ class CustomUserDetailsService(
     private val passwordEncoder: PasswordEncoder,
     private val messageSourceService: MessageSourceService
 ) : UserDetailsService {
-    override fun loadUserByUsername(username: String): UserDetails =
+    override fun loadUserByUsername(
+        username: String
+    ): UserDetails =
         userRepository.findByEmail(username)
             ?.let { createUserDetails(it) } ?: throw UsernameNotFoundException(
             messageSourceService.getMessage(MessageKey.USER_NOT_FOUND)
             )
 
-    private fun createUserDetails(user: User): UserDetails =
+    private fun createUserDetails(
+        user: User
+    ): UserDetails =
         CustomUser(
             user.id!!,
             user.email,
