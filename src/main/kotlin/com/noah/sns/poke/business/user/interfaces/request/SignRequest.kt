@@ -30,11 +30,11 @@ data class SignUpRequest(
         }
     }
     companion object {
-        fun toEntity(signUpRequest: SignUpRequest): User {
+        fun toEntity(signUpRequest: SignUpRequest, password: String): User {
             return User(
                 name = signUpRequest.name,
                 email = signUpRequest.email,
-                password = signUpRequest.password,
+                password = password,
                 birthDate = signUpRequest.birthDate,
                 gender = signUpRequest.gender
             )
