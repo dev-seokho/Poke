@@ -50,6 +50,22 @@ class RestExceptionHandler(
         )
     }
 
+    @ExceptionHandler(UnAuthorizedException::class)
+    fun handle(e: UnAuthorizedException, request: HttpServletRequest): ResponseEntity<Any>? {
+        return handleExceptionInternal(
+            e,
+            RestExceptionResponse.of(
+                status = HttpStatus.UNAUTHORIZED.value(),
+                code = e.messageKey.name,
+                message = messageSourceService.getMessage(e.messageKey, e.messageArguments)
+            ),
+            HttpHeaders.EMPTY,
+            HttpStatus.UNAUTHORIZED,
+            ServletWebRequest(request)
+        )
+    }
+
+
     @ExceptionHandler(BadCredentialsException::class)
     fun handle(e: BadCredentialsException, request: HttpServletRequest): ResponseEntity<Any>? {
         return handleExceptionInternal(

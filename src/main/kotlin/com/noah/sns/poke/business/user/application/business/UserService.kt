@@ -15,6 +15,7 @@ import com.noah.sns.poke.global.support.exception.MessageKey
 import com.noah.sns.poke.global.support.enum.ROLE
 import com.noah.sns.poke.global.support.exception.EntityNotFoundException
 import com.noah.sns.poke.global.support.exception.MethodArgumentInvalidException
+import com.noah.sns.poke.global.support.exception.UnAuthorizedException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -55,7 +56,7 @@ class UserService(
             ?: throw EntityNotFoundException(MessageKey.USER_NOT_FOUND)
 
         if(!passwordEncoder.matches(signInRequest.password, user.password)) {
-            throw RuntimeException("문제!!") // TODO: Auth 에러 밷기, 401 에러 처리들 싹 하기
+            throw UnAuthorizedException(MessageKey.INVALID_AUTH_INFO)
         }
 
         val authenticationToken = UsernamePasswordAuthenticationToken(user.email, user.password)
